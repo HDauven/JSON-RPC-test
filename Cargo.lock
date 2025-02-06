@@ -99,7 +99,7 @@ dependencies = [
  "sha1",
  "sync_wrapper",
  "tokio",
- "tokio-tungstenite 0.24.0",
+ "tokio-tungstenite",
  "tower",
  "tower-layer",
  "tower-service",
@@ -113,7 +113,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6d6fd624c75e18b3b4c6b9caf42b1afe24437daaee904069137d8bab077be8b8"
 dependencies = [
  "axum-core 0.5.0",
- "base64",
  "bytes",
  "form_urlencoded",
  "futures-util",
@@ -133,10 +132,8 @@ dependencies = [
  "serde_json",
  "serde_path_to_error",
  "serde_urlencoded",
- "sha1",
  "sync_wrapper",
  "tokio",
- "tokio-tungstenite 0.26.1",
  "tower",
  "tower-layer",
  "tower-service",
@@ -342,6 +339,12 @@ dependencies = [
  "block-buffer",
  "crypto-common",
 ]
+
+[[package]]
+name = "dyn-clone"
+version = "1.0.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0d6ef0072f8a535281e4876be788938b528e9a1d43900b82c2569af7da799125"
 
 [[package]]
 name = "event-listener"
@@ -578,8 +581,9 @@ name = "json-rpc-test"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "axum 0.8.1",
+ "axum 0.7.9",
  "axum-jrpc",
+ "schemars",
  "serde",
  "serde_json",
  "thiserror 2.0.11",
@@ -894,6 +898,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ea1a2d0a644769cc99faa24c3ad26b379b786fe7c36fd3c546254801650e6dd"
 
 [[package]]
+name = "schemars"
+version = "0.8.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "09c024468a378b7e36765cd36702b7a90cc3cba11654f6685c8f233408e89e92"
+dependencies = [
+ "dyn-clone",
+ "schemars_derive",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "schemars_derive"
+version = "0.8.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b1eee588578aff73f856ab961cd2f79e36bc45d7ded33a7562adba4667aecc0e"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "serde_derive_internals",
+ "syn",
+]
+
+[[package]]
 name = "scopeguard"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -913,6 +941,17 @@ name = "serde_derive"
 version = "1.0.217"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a9bf7cf98d04a2b28aead066b7496853d4779c9cc183c440dbac457641e19a0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "serde_derive_internals"
+version = "0.29.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "18d26a20a969b9e3fdf2fc2d9f21eda6c40e2de84c9408bb5d3b05d499aae711"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1118,19 +1157,7 @@ dependencies = [
  "futures-util",
  "log",
  "tokio",
- "tungstenite 0.24.0",
-]
-
-[[package]]
-name = "tokio-tungstenite"
-version = "0.26.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "be4bf6fecd69fcdede0ec680aaf474cdab988f9de6bc73d3758f0160e3b7025a"
-dependencies = [
- "futures-util",
- "log",
- "tokio",
- "tungstenite 0.26.1",
+ "tungstenite",
 ]
 
 [[package]]
@@ -1238,24 +1265,6 @@ dependencies = [
  "rand",
  "sha1",
  "thiserror 1.0.69",
- "utf-8",
-]
-
-[[package]]
-name = "tungstenite"
-version = "0.26.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "413083a99c579593656008130e29255e54dcaae495be556cc26888f211648c24"
-dependencies = [
- "byteorder",
- "bytes",
- "data-encoding",
- "http",
- "httparse",
- "log",
- "rand",
- "sha1",
- "thiserror 2.0.11",
  "utf-8",
 ]
 
@@ -1428,6 +1437,7 @@ dependencies = [
  "futures",
  "futures-util",
  "log",
+ "schemars",
  "serde",
  "serde_json",
  "tokio",
