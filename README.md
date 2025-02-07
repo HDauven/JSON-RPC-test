@@ -1,5 +1,5 @@
 # Axum JSON-RPC Server
-A lightweight JSON-RPC 2.0 server built with Axum and axum-jrpc, supporting both HTTP and WebSocket requests.
+A lightweight JSON-RPC 2.0 server built with Axum and Yerpc, supporting both HTTP and WebSocket requests.
 
 ## Features
 - JSON-RPC 2.0 compliant  
