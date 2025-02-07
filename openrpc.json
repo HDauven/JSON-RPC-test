@@ -1,0 +1,153 @@
+{
+  "openrpc": "1.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Api"
+  },
+  "methods": [
+    {
+      "name": "get_block_height",
+      "params": [],
+      "result": {
+        "name": "GetBlockHeightResult",
+        "schema": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "required": true
+      },
+      "paramStructure": "by-position"
+    },
+    {
+      "name": "get_balance",
+      "params": [
+        {
+          "name": "address",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "GetBalanceResult",
+        "schema": {
+          "$ref": "#/components/schemas/GetBalanceResponse"
+        },
+        "required": true
+      },
+      "paramStructure": "by-position"
+    },
+    {
+      "name": "get_block",
+      "params": [
+        {
+          "name": "blockHash",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "GetBlockResult",
+        "schema": {
+          "$ref": "#/components/schemas/GetBlockResponse"
+        },
+        "required": true
+      },
+      "paramStructure": "by-position"
+    },
+    {
+      "name": "get_transaction",
+      "params": [
+        {
+          "name": "txHash",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "GetTransactionResult",
+        "schema": {
+          "$ref": "#/components/schemas/GetTransactionResponse"
+        },
+        "required": true
+      },
+      "paramStructure": "by-position"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "GetBalanceResponse": {
+        "type": "object",
+        "required": [
+          "balance"
+        ],
+        "properties": {
+          "balance": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0.0
+          }
+        }
+      },
+      "GetBlockResponse": {
+        "type": "object",
+        "required": [
+          "block_hash",
+          "timestamp",
+          "transactions"
+        ],
+        "properties": {
+          "block_hash": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0.0
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "GetTransactionResponse": {
+        "type": "object",
+        "required": [
+          "amount",
+          "from",
+          "status",
+          "to",
+          "tx_hash"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0.0
+          },
+          "from": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "tx_hash": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
