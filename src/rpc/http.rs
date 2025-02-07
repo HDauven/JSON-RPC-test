@@ -1,46 +1,17 @@
-use axum::{routing::post, Router, Json};
+use std::sync::Arc;
+
+use axum::{response::IntoResponse, routing::post, Extension, Json, Router};
 use serde_json::Value;
-use yerpc::rpc;
-
-use crate::rpc::types::*;
-
-struct Api;
-
-#[rpc(all_positional, openrpc_outdir = "./")]
-impl Api {
-    async fn get_block_height(&self) -> u64 {
-        123456
-    }
-
-    async fn get_balance(&self, _address: String) -> GetBalanceResponse {
-        GetBalanceResponse { balance: 1000 }
-    }
-
-    async fn get_block(&self, block_hash: String) -> GetBlockResponse {
-        GetBlockResponse {
-            block_hash,
-            transactions: vec!["tx1".into(), "tx2".into()],
-            timestamp: 1617181723,
-        }
-    }
-
-    async fn get_transaction(&self, tx_hash: String) -> GetTransactionResponse {
-        GetTransactionResponse {
-            tx_hash,
-            from: "address1".into(),
-            to: "address2".into(),
-            amount: 500,
-            status: "confirmed".into(),
-        }
-    }
-}
+use crate::rpc::api::Api;
 
 pub fn router() -> Router {
     Router::new().route("/rpc", post(handle_request))
 }
 
-async fn handle_request(Json(payload): Json<Value>) -> Json<Value> {
-    let api = Api;
+async fn handle_request(
+    Extension(api): Extension<Arc<Api>>,
+    Json(payload): Json<Value>,
+) -> impl IntoResponse {
     let answer_id = payload.get("id").cloned().unwrap_or(Value::Null);
     let method = payload.get("method").and_then(|m| m.as_str()).unwrap_or("");
 
